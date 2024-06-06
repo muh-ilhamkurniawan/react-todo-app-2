@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Todos from "./components/Todos";
 import TodoForm from "./components/TodoForm";
 
@@ -21,6 +21,15 @@ function App() {
     },
   ]);
 
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const toggleCompleted = (todoId) => {
     const updatedTodos = todos.map((todo) => {
       if (todo.id === todoId) {
@@ -36,7 +45,6 @@ function App() {
     setTodos(updatedTodos);
   };
 
-  // Definisikan function addTodo
   const addTodo = (todoTitle) => {
     if (todoTitle === "") {
       return;
@@ -53,23 +61,13 @@ function App() {
   };
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>My Todo List</h1>
-      {/* Teruskan function addTodo sebagai props */}
+    <div className="text-center p-3 my-5">
+      <h1 className="text-3xl font-bold">My Todo List</h1>
+      <p className="text-2xl mb-5">{currentTime.toLocaleTimeString("default", { hour12: false })}</p>
       <TodoForm addTodo={addTodo} />
       <Todos todos={todos} toggleCompleted={toggleCompleted} deleteTodo={deleteTodo} />
     </div>
   );
 }
-
-const styles = {
-  container: {
-    textAlign: "center",
-    padding: "12px",
-  },
-  title: {
-    fontSize: "36px",
-  },
-};
 
 export default App;
