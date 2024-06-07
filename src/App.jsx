@@ -8,16 +8,19 @@ function App() {
       id: 1,
       title: "Finish Progate React Course",
       completed: false,
+      completedAt: null,
     },
     {
       id: 2,
       title: "Have lunch with Guru Domba",
       completed: false,
+      completedAt: null,
     },
     {
       id: 3,
       title: "Study React with Ninja Ken",
       completed: false,
+      completedAt: null,
     },
   ]);
 
@@ -33,7 +36,8 @@ function App() {
   const toggleCompleted = (todoId) => {
     const updatedTodos = todos.map((todo) => {
       if (todo.id === todoId) {
-        return { ...todo, completed: !todo.completed };
+        const completedAt = todo.completed ? null : new Date();
+        return { ...todo, completed: !todo.completed, completedAt };
       }
       return todo;
     });
@@ -54,6 +58,7 @@ function App() {
       id: todos.length + 1,
       title: todoTitle,
       completed: false,
+      completedAt: null,
     };
 
     const updatedTodos = todos.concat(newTodo);
